@@ -14,4 +14,18 @@ public final class Entreprise {
 		return LocalDate.now().getYear() * 0.5;
 	}
 
+	private String nom;
+	
+
+	public String getNom() {
+		return nom;
+	}
+
+	public void setNom(String nom) {
+		this.nom = nom;
+	}
+
+
+
+
 }
