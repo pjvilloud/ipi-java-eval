@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface CadreRepository extends BaseEmployeRepository<Cadre> {
 
-    List<Cadre> findByCoefficient(Integer coefficient);
-    List<Cadre> findByCoefficientBetween(Integer gradeLower, Integer gradeUpper);
+    public List<Cadre> findByCoefficient(Integer coefficient);
+    public List<Cadre> findByCoefficientBetween(Integer gradeLower, Integer gradeUpper);
 
 }
