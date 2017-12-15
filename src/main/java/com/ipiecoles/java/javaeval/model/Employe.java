@@ -13,6 +13,10 @@ public abstract class Employe {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
+	
+	@ManyToOne
+	@JoinColumn(name = "entreprise_id")
+	private Entreprise entreprise;
 
 	private String nom;
 	
@@ -36,6 +40,15 @@ public abstract class Employe {
 		this.dateEmbauche = dateEmbauche;
 		this.salaire = salaire;
 	}
+	
+
+	public Entreprise getEntreprise() {
+		return entreprise;
+	}
+
+	public void setEntreprise(Entreprise entreprise) {
+		this.entreprise = entreprise;
+	}
 
 	public final Integer getNombreAnneeAnciennete() {
 		return LocalDate.now().getYear() - dateEmbauche.getYear();
@@ -48,7 +61,7 @@ public abstract class Employe {
 	public abstract Double getPrimeAnnuelle();
 
 	public void augmenterSalaire(Double pourcentage) {
-		this.salaire = this.getSalaire() * (1 + pourcentage);
+		this.salaire = this.getSalaire() * (1 + pourcentage/100);
 	}
 
 	public Long getId() {
@@ -135,7 +148,7 @@ public abstract class Employe {
 
 	@Override
 	public String toString() {
-		final StringBuilder sb = new StringBuilder("Employe{");
+		final StringBuilder sb = new StringBuilder();
 		sb.append("nom='").append(nom).append('\'');
 		sb.append(", prenom='").append(prenom).append('\'');
 		sb.append(", matricule='").append(matricule).append('\'');
