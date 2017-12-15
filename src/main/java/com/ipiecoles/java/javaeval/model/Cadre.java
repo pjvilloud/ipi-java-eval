@@ -1,9 +1,12 @@
 package com.ipiecoles.java.javaeval.model;
 
+import javax.persistence.Entity;
+
 import org.joda.time.LocalDate;
 
 import com.ipiecoles.java.javaeval.exceptions.CadreException;
 
+@Entity
 public class Cadre extends Employe {
 
 	public Cadre() {}

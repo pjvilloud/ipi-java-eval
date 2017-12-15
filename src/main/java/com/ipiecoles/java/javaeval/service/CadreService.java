@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class CadreService extends BaseEmployeService<Cadre> {
-	
+
 	@Autowired
 	CadreRepository cadreRepository;
 	
