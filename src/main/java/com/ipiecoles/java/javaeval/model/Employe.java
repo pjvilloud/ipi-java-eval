@@ -20,6 +20,8 @@ public abstract class Employe {
 
 	private String matricule;
 
+	private  Long idEntreprise;
+
 	@Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
 	private LocalDate dateEmbauche;
 	
