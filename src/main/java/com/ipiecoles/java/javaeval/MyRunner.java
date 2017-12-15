@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.Properties;
 
 @Component
 public class MyRunner implements CommandLineRunner {
@@ -13,11 +14,13 @@ public class MyRunner implements CommandLineRunner {
     @Override
     public void run(String... strings) throws Exception {
         Connection connexion = initConnection();
-        Statement statement = connexion.createStatement();
-        ResultSet resultSet = statement.executeQuery("SELECT * FROM Employe LIMIT 10");
-        while ( resultSet.next() ) {
-            print(resultSet.getString("nom"));
-            print(resultSet.getDate("dateEmbauche"));
+        if(connexion != null) {
+	        Statement statement = connexion.createStatement();
+	        ResultSet resultSet = statement.executeQuery("SELECT * FROM Employe LIMIT 10");
+	        while ( resultSet.next() ) {
+	            print("Nom : " + resultSet.getString("nom"));
+	            print("Embauche : " + resultSet.getDate("dateEmbauche"));
+	        }
         }
 
         /*Technicien t = technicienRepository.findOne(4L);
@@ -66,8 +69,8 @@ public class MyRunner implements CommandLineRunner {
     public java.sql.Connection initConnection(){
         String url = "jdbc:mysql://localhost:3306/entreprise";
         String user = "root";
-        String pwd = "root";
-
+        String pwd = "password";
+        
         java.sql.Connection connexion = null;
 
         try {
