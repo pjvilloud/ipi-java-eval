@@ -29,6 +29,9 @@ public final class Entreprise {
 	private Long id;
 	
 	private String nom;
+	public String getNom() {
+		return nom;
+	}
 	
 	@OneToMany(mappedBy = "entreprise")
 	private Set<Employe> employes = new HashSet<>();
@@ -39,7 +42,7 @@ public final class Entreprise {
 	public void removeEmploye(Employe emp) {
 		employes.remove(emp);
 	}
-	public Set<Employe> listEmployes() {
+	public Set<Employe> getEmployes() {
 		return employes;
 	}
 	public Integer countEmployes() {
@@ -47,12 +50,5 @@ public final class Entreprise {
 	}
 	public boolean hasEmploye(Employe emp) {
 		return employes.contains(emp);
-	}
-	
-	private Double massSalary;
-	public Double getMassSalaries() {
-		massSalary = 0d;
-		employes.forEach((e) -> massSalary += e.getSalaire());
-		return massSalary;
 	}
 }
