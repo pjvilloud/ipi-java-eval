@@ -6,13 +6,19 @@ import org.joda.time.LocalDate;
 import javax.persistence.*;
 import java.util.Objects;
 
+// de base employé était une classe abstraite, mais j'ai simplifié 
+// et n'ai pas inclus le système de spécialisation (techn manager...)
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED)
-public abstract class Employe {
+public class Employe {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
+	
+	// relation Many to One
+	@ManyToOne
+	@JoinColumn(name = "entreprise_id")
+	private Entreprise entreprise;
 
 	private String nom;
 	
@@ -36,6 +42,15 @@ public abstract class Employe {
 		this.dateEmbauche = dateEmbauche;
 		this.salaire = salaire;
 	}
+	
+	// getter entreprise
+	public Entreprise getEntreprise() {
+		return entreprise;
+	}
+
+	public void setEntreprise(Entreprise entreprise) {
+		this.entreprise = entreprise;
+	}
 
 	public final Integer getNombreAnneeAnciennete() {
 		return LocalDate.now().getYear() - dateEmbauche.getYear();
@@ -44,8 +59,6 @@ public abstract class Employe {
 	public Integer getNbConges() {
 		return Entreprise.NB_CONGES_BASE;
 	}
-	
-	public abstract Double getPrimeAnnuelle();
 
 	public void augmenterSalaire(Double pourcentage) {
 		this.salaire = this.getSalaire() * (1 + pourcentage);
