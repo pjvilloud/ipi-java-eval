@@ -10,7 +10,6 @@ import java.util.Objects;
 @Entity
 public class Technicien extends Employe implements Comparable<Technicien> {
 
-
 	@ManyToOne
 	private Manager manager;
 
@@ -25,6 +24,7 @@ public class Technicien extends Employe implements Comparable<Technicien> {
 		this.setGrade(grade);
 	}
 
+	@Override
 	public Double getPrimeAnnuelle() {
 		Double salaireBase = Entreprise.primeAnnuelleBase();
 		return salaireBase + salaireBase * (1 + (double) grade / 10) + Entreprise.PRIME_ANCIENNETE * this.getNombreAnneeAnciennete();
@@ -38,6 +38,7 @@ public class Technicien extends Employe implements Comparable<Technicien> {
 		this.manager = manager;
 	}
 
+	@Override
 	public Integer getNbConges() {
 		return super.getNbConges() + this.getNombreAnneeAnciennete();
 	}

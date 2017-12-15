@@ -13,6 +13,9 @@ public abstract class Employe {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
+	
+	@ManyToOne
+	private Entreprise entreprise;
 
 	private String nom;
 	
@@ -131,6 +134,19 @@ public abstract class Employe {
 	 */
 	public void setSalaire(Double salaire) {
 		this.salaire = salaire;
+	}
+	
+	/**
+	 * @return the entreprise
+	 */
+	public Entreprise getEntreprise() {
+		return entreprise;
+	}
+	/**
+	 * @param salaire the entreprise to set
+	 */
+	public void setEntreprise(Entreprise e) {
+		entreprise = e;
 	}
 
 	@Override

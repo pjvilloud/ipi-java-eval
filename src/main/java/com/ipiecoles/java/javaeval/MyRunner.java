@@ -1,3 +1,4 @@
+
 package com.ipiecoles.java.javaeval;
 
 import org.springframework.boot.CommandLineRunner;
@@ -6,7 +7,6 @@ import org.springframework.stereotype.Component;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.Properties;
 
 @Component
 public class MyRunner implements CommandLineRunner {
@@ -17,7 +17,7 @@ public class MyRunner implements CommandLineRunner {
         if(connexion != null) {
 	        Statement statement = connexion.createStatement();
 	        ResultSet resultSet = statement.executeQuery("SELECT * FROM Employe LIMIT 10");
-	        while ( resultSet.next() ) {
+	        while (resultSet.next()) {
 	            print("Nom : " + resultSet.getString("nom"));
 	            print("Embauche : " + resultSet.getDate("dateEmbauche"));
 	        }

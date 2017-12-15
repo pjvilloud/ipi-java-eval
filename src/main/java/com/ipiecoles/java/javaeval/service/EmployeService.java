@@ -26,4 +26,15 @@ public class EmployeService {
     public Employe creerEmploye(Employe e) {
         return employeRepository.save(e);
     }
+
+	public void updateEmploye(Employe emp) {
+		employeRepository.save(emp);
+	}
+	public void deleteEmploye(Employe emp) {
+		employeRepository.delete(emp);
+	}
+
+	public void augmenterEmploye(Employe emp, Double pourcentage) {
+		emp.augmenterSalaire(pourcentage);
+	}
 }
