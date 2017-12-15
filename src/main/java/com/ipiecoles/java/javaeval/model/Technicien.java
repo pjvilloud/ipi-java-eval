@@ -55,9 +55,9 @@ public class Technicien extends Employe implements Comparable<Technicien> {
 	 * @throws TechnicienException 
 	 */
 	public void setGrade(Integer grade) throws TechnicienException {
-		/*if(grade <= 0 || grade > 5) {
+		if(grade <= 0 || grade > 5) {
 			throw new TechnicienException(TechnicienException.GRADE, this, grade);
-		}*/
+		}
 		this.grade = grade;
 	}
 

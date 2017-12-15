@@ -2,7 +2,6 @@ package com.ipiecoles.java.javaeval.service;
 
 import com.ipiecoles.java.javaeval.model.Employe;
 import com.ipiecoles.java.javaeval.model.Entreprise;
-import com.ipiecoles.java.javaeval.repository.EmployeRepository;
 import com.ipiecoles.java.javaeval.repository.EntrepriseRepository;
 
 import java.util.Set;
