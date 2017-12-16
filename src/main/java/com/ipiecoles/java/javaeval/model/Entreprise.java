@@ -11,8 +11,15 @@ import javax.persistence.OneToMany;
 
 import org.joda.time.LocalDate;
 
+import com.ipiecoles.java.javaeval.exceptions.EntrepriseException;
+import com.ipiecoles.java.javaeval.exceptions.TechnicienException;
+
 @Entity
 public final class Entreprise {
+	
+	public static final Integer MIN_NOM = 5;
+	public static final Integer MAX_NOM = 20;
+	
 	public static final Double SALAIRE_BASE = 1480.27;
 	public static final Integer NB_CONGES_BASE = 25;
 	public static final Integer NB_RTT_BASE = 12;
@@ -29,9 +36,26 @@ public final class Entreprise {
 	private Long id;
 	
 	private String nom;
+	
+	public Entreprise() {}
+	
+	public Entreprise(String nom) throws EntrepriseException {
+		setNom(nom);
+	}
+	
 	public String getNom() {
 		return nom;
 	}
+	/**
+	 * @param nom the nom to set
+	 * @throws EntrepriseException 
+	 */
+	public void setNom(String nom) throws EntrepriseException {
+		if(nom.length() < Entreprise.MIN_NOM || nom.length() > Entreprise.MAX_NOM) {
+			throw new EntrepriseException(EntrepriseException.NOM, nom);
+		}
+		this.nom = nom;
+	}	
 	
 	@OneToMany(mappedBy = "entreprise")
 	private Set<Employe> employes = new HashSet<>();

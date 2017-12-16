@@ -9,6 +9,8 @@ import com.ipiecoles.java.javaeval.model.Entreprise;
 import com.ipiecoles.java.javaeval.service.EntrepriseService;
 
 import java.util.List;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Parameter;
 import java.sql.Connection;
 import java.util.Arrays;
 import java.util.Scanner;
@@ -159,7 +161,9 @@ public class MyRunner implements CommandLineRunner {
 			switch(states.get(i-1)) {
 				case LIST:
 					listEntities();
+					break;
 				case CREATE:
+					createEntity();
 					break;
 				case SELECT:
 					break;
@@ -176,11 +180,26 @@ public class MyRunner implements CommandLineRunner {
 			outl("There are " + num + " " + entreprise.toString() + ".");
 			if(num > 0) {
 				outl("Here is the list:", 0);
+				
 				List<Entreprise> list = entreprise.findAll();
 				for(int i=0, l=list.size(); i<l; i++) {
 					outl("\t" + i + ": " + list.get(i).getNom());
 				}
 			}
+		}
+		private void createEntity() {
+			Constructor<?> constr = Entreprise.class.getConstructors()[0]; 
+			int num = constr.getParameterCount();
+			
+			outl("There are " + num + " values to set to create a " + entreprise.toString() + ".");
+			outl("Here is the list:", 0);
+			
+			Parameter[] params = constr.getParameters();
+			for(int i=0; i<num; i++) {
+				outl("\t" + params[i].getName() + " : " + params[i].getType().getSimpleName());
+			}
+			
+			//Entreprise temp = new Entreprise("hi");
 		}
 
 		public int getMax() {
