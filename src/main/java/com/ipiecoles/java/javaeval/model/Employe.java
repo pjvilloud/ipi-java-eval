@@ -25,6 +25,10 @@ public abstract class Employe {
 	
 	private Double salaire = Entreprise.SALAIRE_BASE;
 	
+	@ManyToOne
+	@JoinColumn(name="entreprise_id")
+	private Entreprise entreprise;
+	
 	public Employe() {
 		
 	}
