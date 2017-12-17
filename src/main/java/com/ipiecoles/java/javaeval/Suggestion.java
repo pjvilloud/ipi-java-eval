@@ -15,26 +15,29 @@ public class Suggestion implements Outputter {
 	private Scanner scan;
 	private int max;
 	private List<State> options;
-	private EntrepriseService entreprise;
+	private EntrepriseService entrepriseService;
+	
+	private String entityName;
 	
 	public Suggestion(EntrepriseService e, List<State> s) {
 		options = s;
-		entreprise = e;
+		entrepriseService = e;
 		init();
 	}
 	private void init() {
+		entityName = entrepriseService.toString();
 		restate();
 	}
 	
 	public void restate() {
 		outQuestion("What would you like to do?");
-		for(max = 1; max < options.size(); max++) {
+		for(max = 1; max < options.size() + 1; max++) {
 			outList(numActionText(max));
 		}
 	}
 	private String actionText(int i) {
 		// ex: create: entreprise
-		return options.get(i-1).toString() + ": " + entreprise.toString();
+		return options.get(i-1).toString() + ": " + entityName;
 	}
 	private String numActionText(int i) {
 		// ex: 1) create: entreprise
@@ -104,13 +107,13 @@ public class Suggestion implements Outputter {
 	}
 	
 	private void listEntities() {
-		Long num = entreprise.countAllEntreprise();
+		Long num = entrepriseService.countAllEntreprise();
 		
-		outl("There are " + num + " " + entreprise.toString() + ".");
+		outl("There are " + num + " " + entityName + ".");
 		if(num > 0) {
 			outl("Here is the list:", 2);
 			
-			List<Entreprise> list = entreprise.findAll();
+			List<Entreprise> list = entrepriseService.findAll();
 			for(int i=0, l=list.size(); i<l; i++) {
 				outList("\t" + i + ": " + list.get(i).getNom());
 			}
@@ -120,7 +123,7 @@ public class Suggestion implements Outputter {
 		Constructor<?> constr = Entreprise.class.getConstructors()[0]; 
 		int num = constr.getParameterCount();
 		
-		outl("There are " + num + " values to set to create a " + entreprise.toString() + ".");
+		outl("There are " + num + " values to set to create a " + entityName + ".");
 		outl("Here is the list:", 2);
 		
 		Parameter[] params = constr.getParameters();
@@ -133,10 +136,10 @@ public class Suggestion implements Outputter {
 			}
 		}
 		
-		outImportant("Enter '' to cancel.", 0);
+		outl("Enter '' to cancel.", 0);
 		
 		boolean success = false;
-		Entreprise temp = new Entreprise();
+		Entreprise hydrate = new Entreprise();
 		
 		for(int i=0; i<num; i++) {
 			
@@ -156,7 +159,7 @@ public class Suggestion implements Outputter {
 				
 				try {
 					// invoke setter for hydration
-					temp.getClass().getMethod(setterName, type).invoke(temp, type.cast(input));
+					hydrate.getClass().getMethod(setterName, type).invoke(hydrate, type.cast(input));
 					success = true;
 				} catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
 					outImportant("Invalid input maybe: " + e.getClass().getSimpleName());
@@ -164,11 +167,19 @@ public class Suggestion implements Outputter {
 			} while(!success);
 			
 			if(!success) {
+				outImportant("Creation was cancelled while setting " + paramName + ".", 0);
 				break;
 			}
 		}
-		if(!success) {
-			outImportant("Aborting.", 0);
+		if(success) {
+			try {
+				entrepriseService.createEntreprise(hydrate);
+				outImportant(entityName + " was successfully created.", 0);
+			} catch(Exception e) {
+				outImportant("Something went wrong: " + e.getClass().getSimpleName(), 0);
+			}
+		} else {
+			outImportant("Aborting.");
 		}
 	}
 	
