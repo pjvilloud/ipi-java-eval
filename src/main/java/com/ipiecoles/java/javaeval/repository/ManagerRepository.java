@@ -1,5 +1,5 @@
 package com.ipiecoles.java.javaeval.repository;
-
+import javax.persistence.*;
 import com.ipiecoles.java.javaeval.model.Manager;
 import org.springframework.data.jpa.repository.EntityGraph;
 

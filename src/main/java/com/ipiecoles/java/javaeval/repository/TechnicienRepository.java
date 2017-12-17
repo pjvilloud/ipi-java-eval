@@ -1,5 +1,5 @@
 package com.ipiecoles.java.javaeval.repository;
-
+import javax.persistence.*;
 import com.ipiecoles.java.javaeval.model.Technicien;
 import org.springframework.data.domain.Slice;
 
@@ -10,5 +10,7 @@ public interface TechnicienRepository extends BaseEmployeRepository<Technicien> 
     List<Technicien> findByGradeBetween(Integer gradeLower, Integer gradeUpper);
 
     Slice<Technicien> findTop5ByGrade(Integer grade);
+
+	
 
 }

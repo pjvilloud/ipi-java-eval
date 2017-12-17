@@ -2,9 +2,7 @@ package com.ipiecoles.java.javaeval.model;
 
 import com.ipiecoles.java.javaeval.exceptions.TechnicienException;
 import org.joda.time.LocalDate;
-
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -17,11 +15,11 @@ public class Manager extends Employe {
 	private Set<Technicien> equipe = new HashSet();
 
 	public Manager(){
-
+		 
 	}
 
-	public Manager(String nom, String prenom, String matricule, LocalDate dateEmbauche, Double salaire, HashSet<Technicien> equipe) {
-		super(nom, prenom, matricule, dateEmbauche, salaire);
+	public Manager(String nom, String prenom, String matricule, LocalDate dateEmbauche, Double salaire, Integer grade, HashSet<Technicien> equipe) {
+		super(nom, prenom, matricule, dateEmbauche, salaire, grade);
 		this.equipe = equipe;
 	}
 
@@ -33,17 +31,18 @@ public class Manager extends Employe {
 		this.ajoutTechnicienEquipe(new Technicien(nom, prenom, matricule, dateEmbauche, salaire, grade));
 	}
 	
-	public void setSalaire(Double salaire) {
-		super.setSalaire(salaire * Entreprise.INDICE_MANAGER + (salaire * (double)equipe.size() / 10));
+	public Double setSalaire(Double salaire) {
+		return super.setSalaire(salaire * Entreprise.INDICE_MANAGER + (salaire * (double)equipe.size() / 10));
 	}
 
 	public Double getPrimeAnnuelle() {
 		return Entreprise.primeAnnuelleBase() + equipe.size() * Entreprise.PRIME_MANAGER_PAR_TECHNICIEN;
 	}
 	
-	public void augmenterSalaire(Double pourcentage) {
+	public Double augmenterSalaire(Double pourcentage) {
 		super.augmenterSalaire(pourcentage);
 		augmenterSalaireEquipe(pourcentage);
+		return pourcentage;
 	}
 
 	private void augmenterSalaireEquipe(Double pourcentage) {

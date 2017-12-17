@@ -21,8 +21,8 @@ public class Technicien extends Employe implements Comparable<Technicien> {
 	}
 		
 	public Technicien(String nom, String prenom, String matricule, LocalDate dateEmbauche, Double salaire, Integer grade) throws TechnicienException {
-		super(nom, prenom, matricule, dateEmbauche, salaire);
-		this.setGrade(grade);
+		super(nom, prenom, matricule, dateEmbauche, salaire, grade);
+		
 	}
 
 	public Double getPrimeAnnuelle() {
@@ -51,9 +51,8 @@ public class Technicien extends Employe implements Comparable<Technicien> {
 
 	/**
 	 * @param grade the grade to set
-	 * @throws TechnicienException 
 	 */
-	public void setGrade(Integer grade) throws TechnicienException {
+	public void setGrade(Integer grade) {
 		/*if(grade <= 0 || grade > 5) {
 			throw new TechnicienException(TechnicienException.GRADE, this, grade);
 		}*/
@@ -61,8 +60,8 @@ public class Technicien extends Employe implements Comparable<Technicien> {
 	}
 
 	@Override
-	public void setSalaire(Double salaire) {
-		super.setSalaire( salaire * (1 + (double) grade / 10));
+	public Double setSalaire(Double salaire) {
+		return super.setSalaire( salaire * (1 + (double) grade / 10));
 	}
 
 	@Override

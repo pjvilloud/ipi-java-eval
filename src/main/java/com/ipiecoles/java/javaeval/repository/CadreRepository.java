@@ -11,16 +11,16 @@ import com.ipiecoles.java.javaeval.model.Employe;
 import net.minidev.json.writer.CollectionMapper.ListType;
 
 
-public interface EmployeRepository extends CrudRepository<Employe,String>  {
+public interface CadreRepository extends CrudRepository<Employe,String>  {
 
 	String save(String employe, Long id);
 
+	HashSet<Employe> findAll(Integer grade);
+	
+	HashSet<Employe> findAll(Sort sort);
+	
 	ListType<Employe> findAll(Double salaire);
 
 	Employe save(String nom, String prenom, String matricule, LocalDate dateEmbauche, Double salaire);
-
-	Employe findAll(Integer grade);
-
-	HashSet<Employe> findAll(Sort sort);
 	
 }
