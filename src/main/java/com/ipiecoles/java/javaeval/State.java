@@ -2,7 +2,7 @@ package com.ipiecoles.java.javaeval;
 
 public enum State {
 	DEFAULT,
-	SELECT,
+	SELECT("one"),
 	LIST("all"),
 	CREATE,
 	EDIT,

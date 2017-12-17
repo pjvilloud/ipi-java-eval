@@ -61,6 +61,8 @@ public interface Outputter {
 
 class StaticOut {
 	
+	public static final int PRINT_DELAY = 30;
+	
 	public static final String DEFAULT_CHAR = "#";
 	public static final String EMPTY_CHAR = "#";
 	public static final String QUESTION_CHAR = "#";
@@ -91,9 +93,11 @@ class StaticOut {
 	
 	private static void charOut() {
 		System.out.print(DEFAULT_CHAR + "\n");
+		pause();
 	}
 	private static void charOut(String s) {
 		System.out.print(curChar + " " + s);
+		pause();
 	}
 	public static void out(String s) {
 		if(spaceNum == 0 || spaceNum == 2) charOut();
@@ -107,6 +111,14 @@ class StaticOut {
 	}
 	public static void outl(String s) {
 		out(s + "\n");
+	}
+	
+	private static void pause() {
+		try {
+			Thread.sleep(PRINT_DELAY);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public static String spamChar(String str, int num) {
