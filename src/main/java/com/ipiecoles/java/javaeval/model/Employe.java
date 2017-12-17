@@ -2,11 +2,12 @@ package com.ipiecoles.java.javaeval.model;
 
 import org.hibernate.annotations.Type;
 import org.joda.time.LocalDate;
-
 import javax.persistence.*;
 import java.util.Objects;
 
+
 @Entity
+@Table(name="Employe")
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Employe {
 
@@ -19,22 +20,31 @@ public abstract class Employe {
 	private String prenom;
 
 	private String matricule;
-
+	
+	private Integer grade;
+	
+		
+	@ManyToOne
+	@JoinColumn(name ="Entreprise_id")
+	private Long entreprise_id;
+	
 	@Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
 	private LocalDate dateEmbauche;
 	
 	private Double salaire = Entreprise.SALAIRE_BASE;
 	
+
 	public Employe() {
 		
 	}
 	
-	public Employe(String nom, String prenom, String matricule, LocalDate dateEmbauche, Double salaire) {
+	public Employe(String nom, String prenom, String matricule, LocalDate dateEmbauche, Double salaire, Integer grade) {
 		this.nom = nom;
 		this.prenom = prenom;
 		this.matricule = matricule;
 		this.dateEmbauche = dateEmbauche;
-		this.salaire = salaire;
+		this.setSalaire(salaire);
+		this.setGrade(grade);
 	}
 
 	public final Integer getNombreAnneeAnciennete() {
@@ -45,10 +55,18 @@ public abstract class Employe {
 		return Entreprise.NB_CONGES_BASE;
 	}
 	
+	public Long getEntreprise_id() {
+		return entreprise_id;
+	}
+
+	public void setEntreprise_id(Long entreprise_id) {
+		this.entreprise_id = entreprise_id;
+	}
+
 	public abstract Double getPrimeAnnuelle();
 
-	public void augmenterSalaire(Double pourcentage) {
-		this.salaire = this.getSalaire() * (1 + pourcentage);
+	public Double augmenterSalaire(Double pourcentage) {
+		return this.setSalaire(this.getSalaire() * (1 + pourcentage));
 	}
 
 	public Long getId() {
@@ -120,6 +138,7 @@ public abstract class Employe {
 	}
 
 	/**
+	 * @return 
 	 * @return the salaire
 	 */
 	public Double getSalaire() {
@@ -128,9 +147,10 @@ public abstract class Employe {
 	
 	/**
 	 * @param salaire the salaire to set
+	 * @return 
 	 */
-	public void setSalaire(Double salaire) {
-		this.salaire = salaire;
+	public Double setSalaire(Double salaire) {
+		return this.salaire = salaire;
 	}
 
 	@Override
@@ -140,7 +160,7 @@ public abstract class Employe {
 		sb.append(", prenom='").append(prenom).append('\'');
 		sb.append(", matricule='").append(matricule).append('\'');
 		sb.append(", dateEmbauche=").append(dateEmbauche);
-		sb.append(", salaire=").append(salaire);
+		sb.append(", salaire=").append(getSalaire());
 		sb.append('}');
 		return sb.toString();
 	}
@@ -152,7 +172,7 @@ public abstract class Employe {
 
 		Employe employe = (Employe) o;
 
-		if (Double.compare(employe.salaire, salaire) != 0) return false;
+		if (Double.compare(employe.getSalaire(), getSalaire()) != 0) return false;
 		if (nom != null ? !nom.equals(employe.nom) : employe.nom != null) return false;
 		if (prenom != null ? !prenom.equals(employe.prenom) : employe.prenom != null) return false;
 		if (matricule != null ? !matricule.equals(employe.matricule) : employe.matricule != null) return false;
@@ -162,6 +182,14 @@ public abstract class Employe {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(nom, prenom, matricule, dateEmbauche, salaire);
+		return Objects.hash(nom, prenom, matricule, dateEmbauche, getSalaire());
+	}
+
+	public Integer getGrade() {
+		return grade;
+	}
+
+	public void setGrade(Integer grade) {
+		this.grade = grade;
 	}
 }

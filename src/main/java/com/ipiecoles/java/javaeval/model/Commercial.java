@@ -15,15 +15,15 @@ public class Commercial extends Employe {
 		
 	}
 	
-	public Commercial(String nom, String prenom, String matricule, LocalDate dateEmbauche, Double salaire,
+	public Commercial(String nom, String prenom, String matricule, LocalDate dateEmbauche, Double salaire, Integer grade,
 			Double caAnnuel) {
-		super(nom, prenom, matricule, dateEmbauche, salaire);
+		super(nom, prenom, matricule, dateEmbauche, salaire, grade);
 		this.caAnnuel = caAnnuel;
 	}
 
-	public Commercial(String nom, String prenom, String matricule, LocalDate dateEmbauche, Double salaire,
+	public Commercial(String nom, String prenom, String matricule, LocalDate dateEmbauche, Double salaire, Integer grade,
 					  Double caAnnuel, Integer performance) {
-		this(nom, prenom, matricule, dateEmbauche, salaire, caAnnuel);
+		this(nom, prenom, matricule, dateEmbauche, salaire, grade, caAnnuel);
 		this.performance = performance;
 	}
 

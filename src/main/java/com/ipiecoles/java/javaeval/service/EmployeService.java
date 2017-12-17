@@ -1,29 +1,67 @@
 package com.ipiecoles.java.javaeval.service;
-
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import javax.persistence.*;
 import com.ipiecoles.java.javaeval.model.Employe;
 import com.ipiecoles.java.javaeval.repository.EmployeRepository;
+
+import net.minidev.json.writer.CollectionMapper.ListType;
+
+import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 @Service
 public class EmployeService {
 
+	//Injection d'employé repository pour récupérer les requetes
     @Autowired
     private EmployeRepository employeRepository;
 
-    public Employe findById(Long id){
+    //Injection d'employés
+    @Autowired
+    public Employe employe;
+    
+    //Trouver un employé par son id
+    public Employe findById(String id){
         return employeRepository.findOne(id);
     }
 
+    //Compter le nombre d'employés
     public Long countAllEmploye() {
-        return employeRepository.count();
+      Long nbEmploye = employeRepository.count();
+      return nbEmploye;
     }
 
-    public void deleteEmploye(Long id){
-        employeRepository.delete(id);
+    //Supprimer un employé 
+    public void deleteEmploye(String employe, Long id){
+       	employeRepository.delete(employe);
+    
     }
 
-    public Employe creerEmploye(Employe e) {
-        return employeRepository.save(e);
+    //Créer un employé
+    public Employe creerEmploye(String nom, String prenom, String matricule, LocalDate dateEmbauche, Double salaire) {
+    	return employe = employeRepository.save(nom, prenom,  matricule, dateEmbauche, salaire);
     }
-}
+    
+    //Lister l'ensemble des employés
+    public HashSet<Employe> findAllEmployeSortingAsc(String nom) {
+    	HashSet<Employe> Liste = employeRepository.findAll(new Sort(Sort.Direction.ASC, nom));
+    	return Liste;
+    }
+    
+    //Augmenter le salaire d'un employé
+    public Double augmentation(Double pourcentage) {
+    	Double salaireAug =  employe.augmenterSalaire(pourcentage);	
+    	return salaireAug;
+    }
+
+   //Récupérer le salaire annuel d'un employé
+   public Double Salaireannuel(Double salaire) {
+	 Double SalaireAnnuel = employe.setSalaire(salaire*12);
+	 return SalaireAnnuel;
+   }
+		   
+   }
