@@ -11,27 +11,30 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class EntrepriseService {
+public class EntrepriseService implements CRUDService {
 	
-	@Override
-	public String toString() {
-		return "entreprise";
-	}
+	@Override public String toString() {return "entreprise";}
 
-    @Autowired
-    private EntrepriseRepository entrepriseRepository;
+    @Autowired private EntrepriseRepository entrepriseRepository;
+    @Autowired private EmployeService employeService;
     
-    @Autowired
-    private EmployeService employeService;
+    // ===== CRUDService implementation ===== //
+    @Override public Long countAll() {return countAllEntreprise();}
+	@Override public void delete(Long id) {deleteEntreprise(id);}
+	@Override public void delete(Object o) {deleteEntreprise((Entreprise) o);}
+	@Override public void update(Object o) {updateEntreprise((Entreprise) o);}
+	@Override public Object create(Object o) {return createEntreprise((Entreprise) o);}
     
     public List<Entreprise> findAll() {
     	return (List<Entreprise>) entrepriseRepository.findAll();
     }
 
-    public Entreprise findById(Long id){
+    @Override
+	public Entreprise findById(Long id){
         return entrepriseRepository.findOne(id);
     }
-    public Entreprise findByNom(String nom){
+    @Override
+	public Entreprise findByNom(String nom){
         return entrepriseRepository.findByNom(nom);
     }
 
@@ -42,8 +45,15 @@ public class EntrepriseService {
     public void deleteEntreprise(Long id){
         entrepriseRepository.delete(id);
     }
+    public void deleteEntreprise(Entreprise e){
+        entrepriseRepository.delete(e);
+    }
 
     public Entreprise createEntreprise(Entreprise e) {
+        return entrepriseRepository.save(e);
+    }
+    
+    public Entreprise updateEntreprise(Entreprise e) {
         return entrepriseRepository.save(e);
     }
     

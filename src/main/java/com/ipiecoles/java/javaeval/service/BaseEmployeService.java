@@ -7,13 +7,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class BaseEmployeService<T extends Employe> {
+public class BaseEmployeService<T extends Employe> implements CRUDService {
 
 	@Autowired
     BaseEmployeRepository<T> baseEmployeRepository;
+	
+	// ===== CRUDService implementation ===== //
+	@Override public Long countAll() {return countAllEmploye();}
+	@Override public void delete(Long id) {deleteEmploye(id);}
+	@Override public void delete(Object o) {deleteEmploye((T) o);}
+	@Override public void update(Object o) {updateEmploye((T) o);}
+	@Override public Object create(Object o) {return createEmploye((T) o);}
 
-    public Employe findById(Long id){
+    @Override
+	public Employe findById(Long id){
         return baseEmployeRepository.findOne(id);
+    }
+    @Override public Object findByNom(String nom) {
+    	return baseEmployeRepository.findByNomIgnoreCase(nom);
     }
 
     public Long countAllEmploye() {
@@ -24,8 +35,8 @@ public class BaseEmployeService<T extends Employe> {
         baseEmployeRepository.delete(id);
     }
 
-    public Employe creerEmploye(T e) {
-        return baseEmployeRepository.save(e);
+    public Employe createEmploye(T emp) {
+        return baseEmployeRepository.save(emp);
     }
 
 	public void updateEmploye(T emp) {
