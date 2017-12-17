@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import com.ipiecoles.java.javaeval.State;
+import com.ipiecoles.java.javaeval.exceptions.CustomException;
 import com.ipiecoles.java.javaeval.model.Entreprise;
 import com.ipiecoles.java.javaeval.service.EntrepriseService;
 
@@ -36,11 +37,11 @@ public class Suggestion implements Outputter {
 		}
 	}
 	private String actionText(int i) {
-		// ex: create: entreprise
-		return options.get(i-1).toString() + ": " + entityName;
+		// ex: entreprise: create
+		return entityName + ": " + options.get(i-1).toString();
 	}
 	private String numActionText(int i) {
-		// ex: 1) create: entreprise
+		// ex: 1) entreprise: create
 		return "(" + i + ") " + actionText(i);
 	}
 	
@@ -86,7 +87,7 @@ public class Suggestion implements Outputter {
 	}
 	
 	public void performAction(int i) {
-		outl("===== (" + actionText(i) + ") =====", 1);
+		outl("===== " + actionText(i) + " =====", 1);
 		switch(options.get(i-1)) {
 			case LIST:
 				listEntities();
@@ -130,9 +131,9 @@ public class Suggestion implements Outputter {
 		for(int i=0; i<num; i++) {
 			outList("\t" + params[i].getName() + " : " + params[i].getType().getSimpleName());
 			
-			if(params[i].getName() == "arg0") {
+			if(params[i].getName().equals("arg0")) {
 				outImportant("Warning: to properly display field names, please compile using '-parameters'.");
-				outImportant("'pom.xml' should have provided this. Perhaps try a Maven run 'clean verify'?");
+				outImportant("pom.xml should have provided this. Perhaps try a Maven run 'clean verify'?");
 			}
 		}
 		
@@ -144,7 +145,7 @@ public class Suggestion implements Outputter {
 		for(int i=0; i<num; i++) {
 			
 			String paramName = params[i].getName();
-			String setterName = "set" + upperFirst(paramName);
+			
 			Class<?> type = params[i].getType();
 			
 			String input;
@@ -158,12 +159,11 @@ public class Suggestion implements Outputter {
 				if(input.length() == 0) break;
 				
 				try {
-					// invoke setter for hydration
-					hydrate.getClass().getMethod(setterName, type).invoke(hydrate, type.cast(input));
-					success = true;
-				} catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-					outImportant("Invalid input maybe: " + e.getClass().getSimpleName());
+					success = invokeSetter(hydrate, params[i], input);
+				} catch (CustomException e) {
+					outImportant("Invalid input: " + e.getMessage());
 				}
+				
 			} while(!success);
 			
 			if(!success) {
@@ -174,7 +174,7 @@ public class Suggestion implements Outputter {
 		if(success) {
 			try {
 				entrepriseService.createEntreprise(hydrate);
-				outImportant(entityName + " was successfully created.", 0);
+				outl(entityName + " was successfully created.", 0);
 			} catch(Exception e) {
 				outImportant("Something went wrong: " + e.getClass().getSimpleName(), 0);
 			}
@@ -183,6 +183,23 @@ public class Suggestion implements Outputter {
 		}
 	}
 	
+	private boolean invokeSetter(Entreprise hydrate, Parameter param, String input) throws CustomException {
+		String paramName = param.getName();
+		String setterName = "set" + upperFirst(paramName);
+		Class<?> type = param.getType();
+		
+		try {
+			// invoke setter for hydration
+			hydrate.getClass().getMethod(setterName, type).invoke(hydrate, type.cast(input));
+			return true;
+			
+		} catch (InvocationTargetException e) {
+			throw (CustomException) e.getTargetException();
+		} catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException e) {
+			outImportant("02Something went wrong: " + e.getClass().getSimpleName());
+		}
+		return false;
+	}
 	private String upperFirst(String s) {
 		return s.substring(0, 1).toUpperCase() + s.substring(1);
 	}

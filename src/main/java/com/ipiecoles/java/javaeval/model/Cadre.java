@@ -28,7 +28,7 @@ public class Cadre extends Employe {
 	 */
 	public void setCoefficient(Integer coeff) throws CadreException {
 		if(coeff < 1 || coeff > 5) {
-			throw new CadreException(CadreException.COEFF, this, coeff);
+			throw new CadreException(CadreException.COEFF, coeff);
 		}
 		coefficient = coeff;
 	}
