@@ -76,7 +76,6 @@
   					<source>1.8</source>
   					<target>1.8</target>
         			<compilerArgument>-parameters</compilerArgument>
-        			<arg>-parameters</arg>
  				</configuration>
 			</plugin>
         </plugins>

@@ -43,7 +43,7 @@ public class EntrepriseService {
         entrepriseRepository.delete(id);
     }
 
-    public Entreprise creerEntreprise(Entreprise e) {
+    public Entreprise createEntreprise(Entreprise e) {
         return entrepriseRepository.save(e);
     }
     

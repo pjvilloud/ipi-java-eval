@@ -12,7 +12,6 @@ import javax.persistence.OneToMany;
 import org.joda.time.LocalDate;
 
 import com.ipiecoles.java.javaeval.exceptions.EntrepriseException;
-import com.ipiecoles.java.javaeval.exceptions.TechnicienException;
 
 @Entity
 public final class Entreprise {
@@ -39,7 +38,7 @@ public final class Entreprise {
 	
 	public Entreprise() {}
 	
-	public Entreprise(String nom) throws EntrepriseException {
+	public Entreprise(String nom)/* throws EntrepriseException*/ {
 		setNom(nom);
 	}
 	
@@ -50,10 +49,10 @@ public final class Entreprise {
 	 * @param nom the nom to set
 	 * @throws EntrepriseException 
 	 */
-	public void setNom(String nom) throws EntrepriseException {
-		if(nom.length() < Entreprise.MIN_NOM || nom.length() > Entreprise.MAX_NOM) {
-			throw new EntrepriseException(EntrepriseException.NOM, nom);
-		}
+	public void setNom(String nom)/* throws EntrepriseException*/ {
+//		if(nom.length() < Entreprise.MIN_NOM || nom.length() > Entreprise.MAX_NOM) {
+//			throw new EntrepriseException(EntrepriseException.NOM, nom);
+//		}
 		this.nom = nom;
 	}	
 	
