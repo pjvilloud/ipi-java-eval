@@ -8,7 +8,7 @@ import java.util.Objects;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-public abstract class Employe {
+public abstract class Employe implements CRUDModel {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -28,9 +28,7 @@ public abstract class Employe {
 	
 	private Double salaire = Entreprise.SALAIRE_BASE;
 	
-	public Employe() {
-		
-	}
+	public Employe() {}
 	
 	public Employe(String nom, String prenom, String matricule, LocalDate dateEmbauche, Double salaire) {
 		this.nom = nom;
@@ -65,6 +63,7 @@ public abstract class Employe {
 	/**
 	 * @return the nom
 	 */
+	@Override
 	public String getNom() {
 		return nom;
 	}

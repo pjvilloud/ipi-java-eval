@@ -1,5 +1,6 @@
 package com.ipiecoles.java.javaeval.service;
 
+import com.ipiecoles.java.javaeval.model.CRUDModel;
 import com.ipiecoles.java.javaeval.model.Employe;
 import com.ipiecoles.java.javaeval.model.Entreprise;
 import com.ipiecoles.java.javaeval.repository.EntrepriseRepository;
@@ -15,17 +16,18 @@ public class EntrepriseService implements CRUDService {
 	
 	@Override public String toString() {return "entreprise";}
 
-    @Autowired private EntrepriseRepository entrepriseRepository;
+    @Autowired private EntrepriseRepository<Entreprise> entrepriseRepository;
     @Autowired private EmployeService employeService;
     
     // ===== CRUDService implementation ===== //
     @Override public Long countAll() {return countAllEntreprise();}
 	@Override public void delete(Long id) {deleteEntreprise(id);}
-	@Override public void delete(Object o) {deleteEntreprise((Entreprise) o);}
-	@Override public void update(Object o) {updateEntreprise((Entreprise) o);}
-	@Override public Object create(Object o) {return createEntreprise((Entreprise) o);}
+	@Override public void delete(CRUDModel m) {deleteEntreprise((Entreprise) m);}
+	@Override public void update(CRUDModel m) {updateEntreprise((Entreprise) m);}
+	@Override public Entreprise create(CRUDModel m) {return createEntreprise((Entreprise) m);}
     
-    public List<Entreprise> findAll() {
+    @Override
+	public List<Entreprise> findAll() {
     	return (List<Entreprise>) entrepriseRepository.findAll();
     }
 
@@ -34,8 +36,8 @@ public class EntrepriseService implements CRUDService {
         return entrepriseRepository.findOne(id);
     }
     @Override
-	public Entreprise findByNom(String nom){
-        return entrepriseRepository.findByNom(nom);
+	public List<Entreprise> findByNom(String nom){
+        return (List<Entreprise>) entrepriseRepository.findByNom(nom);
     }
 
     public Long countAllEntreprise() {

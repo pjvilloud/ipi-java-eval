@@ -4,12 +4,12 @@ import com.ipiecoles.java.javaeval.model.Entreprise;
 
 import org.springframework.data.repository.PagingAndSortingRepository;
 
-public interface EntrepriseRepository extends PagingAndSortingRepository<Entreprise, Long> {
+public interface EntrepriseRepository<T extends Entreprise> extends PagingAndSortingRepository<T, Long> {
 	
-    Entreprise findById(Integer id);
+    T findById(Integer id);
 
-    Entreprise findByNom(String nom);
+    T findByNom(String nom);
 
-    Entreprise findByNomIgnoreCase(String nom);
+    T findByNomIgnoreCase(String nom);
     
 }

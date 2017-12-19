@@ -14,7 +14,7 @@ import org.joda.time.LocalDate;
 import com.ipiecoles.java.javaeval.exceptions.EntrepriseException;
 
 @Entity
-public final class Entreprise {
+public class Entreprise implements CRUDModel {
 	
 	public static final Integer MIN_NOM = 5;
 	public static final Integer MAX_NOM = 20;
@@ -42,6 +42,7 @@ public final class Entreprise {
 		setNom(nom);
 	}
 	
+	@Override
 	public String getNom() {
 		return nom;
 	}

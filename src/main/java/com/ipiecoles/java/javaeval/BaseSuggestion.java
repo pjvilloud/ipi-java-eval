@@ -4,51 +4,51 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Parameter;
 import java.util.List;
-import java.util.Scanner;
 
 import com.ipiecoles.java.javaeval.State;
 import com.ipiecoles.java.javaeval.exceptions.CustomException;
+import com.ipiecoles.java.javaeval.model.CRUDModel;
 import com.ipiecoles.java.javaeval.model.Entreprise;
-import com.ipiecoles.java.javaeval.service.EntrepriseService;
+import com.ipiecoles.java.javaeval.service.CRUDService;
 
-public class Suggestion implements Outputter {
+public class BaseSuggestion implements Outputter {
 	
-	private Scanner scan;
-	private int max;
-	private List<State> options;
-	private EntrepriseService entrepriseService;
+	private int maxChoices;
+	private List<State> choices;
 	
-	private String entityName;
+	private CRUDService crudService;
+	private CRUDModel entity;
 	
-	public Suggestion(EntrepriseService e, List<State> s) {
-		options = s;
-		entrepriseService = e;
+	private String serviceName;
+	
+	public BaseSuggestion(CRUDService s, List<State> c) {
+		choices = c;
+		crudService = s;
 		init();
 	}
 	private void init() {
-		entityName = entrepriseService.toString();
+		serviceName = crudService.toString();
 		restate();
 	}
 	
 	public void restate() {
 		outQuestion("What would you like to do?");
-		for(max = 1; max < options.size() + 1; max++) {
-			outList(numActionText(max));
+		for(maxChoices = 1; maxChoices < choices.size() + 1; maxChoices++) {
+			outList(numActionText(maxChoices));
 		}
 	}
 	private String actionText(int i) {
 		// ex: entreprise: create
-		return entityName + ": " + options.get(i-1).toString();
+		return serviceName + " - " + choices.get(i-1).toString();
 	}
 	private String numActionText(int i) {
-		// ex: 1) entreprise: create
-		return "(" + i + ") " + actionText(i);
+		// ex: 1: entreprise - create
+		return i + ": " + actionText(i);
 	}
 	
-	public boolean nextLine(Scanner scan) {
-		this.scan = scan;
+	public boolean nextLine() {
 		
-		String input = scan.nextLine();
+		String input = cleanInput();
 		
 		switch(input) {
 			case "exit":
@@ -77,18 +77,18 @@ public class Suggestion implements Outputter {
 	private void parseInput(String input) {
     	try {
     		int num = Integer.parseInt(input);
-    		if(1 <= num && num <= max) {
+    		if(1 <= num && num <= maxChoices) {
     			performAction(num);
     			return;
     		}
     	} catch(NumberFormatException e) {}
     	
-    	outl("Please enter a number between 1 and " + max + ".");
+    	outl("Please enter a number between 1 and " + maxChoices + ".");
 	}
 	
 	public void performAction(int i) {
 		outl("===== " + actionText(i) + " =====", 1);
-		switch(options.get(i-1)) {
+		switch(choices.get(i-1)) {
 			case LIST:
 				listEntities();
 				break;
@@ -108,13 +108,13 @@ public class Suggestion implements Outputter {
 	}
 	
 	private void listEntities() {
-		Long num = entrepriseService.countAllEntreprise();
+		Long num = crudService.countAll();
 		
-		outl("There are " + num + " " + entityName + ".");
+		outl("There are " + num + " " + serviceName + ".");
 		if(num > 0) {
 			outl("Here is the list:", 2);
 			
-			List<Entreprise> list = entrepriseService.findAll();
+			List<? extends CRUDModel> list = crudService.findAll();
 			for(int i=0, l=list.size(); i<l; i++) {
 				outList("\t" + i + ": " + list.get(i).getNom());
 			}
@@ -124,7 +124,7 @@ public class Suggestion implements Outputter {
 		Constructor<?> constr = Entreprise.class.getConstructors()[0]; 
 		int num = constr.getParameterCount();
 		
-		outl("There are " + num + " values to set to create a " + entityName + ".");
+		outl("There are " + num + " values to set to create a " + serviceName + ".");
 		outl("Here is the list:", 2);
 		
 		Parameter[] params = constr.getParameters();
@@ -173,8 +173,8 @@ public class Suggestion implements Outputter {
 		}
 		if(success) {
 			try {
-				entrepriseService.createEntreprise(hydrate);
-				outl(entityName + " was successfully created.", 0);
+				crudService.create(hydrate);
+				outl(serviceName + " was successfully created.", 0);
 			} catch(Exception e) {
 				outImportant("Something went wrong: " + e.getClass().getSimpleName(), 0);
 			}
@@ -204,7 +204,7 @@ public class Suggestion implements Outputter {
 		return s.substring(0, 1).toUpperCase() + s.substring(1);
 	}
 	private String cleanInput() {
-		return scan.nextLine().replaceAll("\\s", "");
+		return MyRunner.SCAN.nextLine().replaceAll("\\s", "");
 	}
 	
 }

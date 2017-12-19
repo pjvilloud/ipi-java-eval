@@ -61,7 +61,7 @@ public interface Outputter {
 
 class StaticOut {
 	
-	public static final int PRINT_DELAY = 30;
+	public static final int PRINT_DELAY = 50;
 	
 	public static final String DEFAULT_CHAR = "#";
 	public static final String EMPTY_CHAR = "#";
@@ -97,7 +97,6 @@ class StaticOut {
 	}
 	private static void charOut(String s) {
 		System.out.print(curChar + " " + s);
-		pause();
 	}
 	public static void out(String s) {
 		if(spaceNum == 0 || spaceNum == 2) charOut();
@@ -111,6 +110,7 @@ class StaticOut {
 	}
 	public static void outl(String s) {
 		out(s + "\n");
+		pause();
 	}
 	
 	private static void pause() {
