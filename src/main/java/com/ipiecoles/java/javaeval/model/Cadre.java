@@ -35,6 +35,6 @@ public class Cadre extends Employe {
 
 	@Override
 	public Double getPrimeAnnuelle() {
-		return null;
+		return 1d;
 	}
 }

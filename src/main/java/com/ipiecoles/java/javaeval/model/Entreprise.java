@@ -43,6 +43,10 @@ public class Entreprise implements CRUDModel {
 	}
 	
 	@Override
+	public String toString() {
+		return getNom();
+	}
+	
 	public String getNom() {
 		return nom;
 	}

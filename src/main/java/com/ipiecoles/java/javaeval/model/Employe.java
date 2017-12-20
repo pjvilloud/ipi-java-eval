@@ -63,7 +63,6 @@ public abstract class Employe implements CRUDModel {
 	/**
 	 * @return the nom
 	 */
-	@Override
 	public String getNom() {
 		return nom;
 	}
@@ -150,14 +149,7 @@ public abstract class Employe implements CRUDModel {
 
 	@Override
 	public String toString() {
-		final StringBuilder sb = new StringBuilder("Employe{");
-		sb.append("nom='").append(nom).append('\'');
-		sb.append(", prenom='").append(prenom).append('\'');
-		sb.append(", matricule='").append(matricule).append('\'');
-		sb.append(", dateEmbauche=").append(dateEmbauche);
-		sb.append(", salaire=").append(salaire);
-		sb.append('}');
-		return sb.toString();
+		return getNom() + ", " + getPrenom();
 	}
 
 	@Override

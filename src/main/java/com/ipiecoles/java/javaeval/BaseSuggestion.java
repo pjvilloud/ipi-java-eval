@@ -116,7 +116,7 @@ public class BaseSuggestion implements Outputter {
 			
 			List<? extends CRUDModel> list = crudService.findAll();
 			for(int i=0, l=list.size(); i<l; i++) {
-				outList("\t" + i + ": " + list.get(i).getNom());
+				outList("\t" + i + ": " + list.get(i).toString());
 			}
 		}
 	}
@@ -128,13 +128,14 @@ public class BaseSuggestion implements Outputter {
 		outl("Here is the list:", 2);
 		
 		Parameter[] params = constr.getParameters();
+		
+		if(!params[0].isNamePresent()) {
+			outImportant("Warning: to properly display field names, please compile using '-parameters'.");
+			outImportant("pom.xml should have provided this. Perhaps try a Maven run 'clean verify'?", 1);
+		}
+
 		for(int i=0; i<num; i++) {
-			outList("\t" + params[i].getName() + " : " + params[i].getType().getSimpleName());
-			
-			if(params[i].getName().equals("arg0")) {
-				outImportant("Warning: to properly display field names, please compile using '-parameters'.");
-				outImportant("pom.xml should have provided this. Perhaps try a Maven run 'clean verify'?");
-			}
+			outList("\t" + params[i].getName() + " (" + params[i].getType().getSimpleName() + ")");
 		}
 		
 		outl("Enter '' to cancel.", 0);

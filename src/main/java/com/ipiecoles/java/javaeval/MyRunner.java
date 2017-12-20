@@ -28,7 +28,14 @@ public class MyRunner implements CommandLineRunner, Outputter {
 		outImportant("Enter '?' at any time to restate available actions.");
 		outImportant("Enter 'exit' or '' to quit.", 1);
 		
-		EntrepriseSuggestion suggestion = new EntrepriseSuggestion(entrepriseService, Arrays.asList(State.LIST, State.CREATE, State.SELECT));
+		EntrepriseSuggestion suggestion = new EntrepriseSuggestion(
+			entrepriseService,
+			Arrays.asList(
+				State.LIST,
+				State.CREATE,
+				State.SELECT
+			)
+		);
 		
 		boolean running;
 		

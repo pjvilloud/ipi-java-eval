@@ -20,9 +20,7 @@ public class BaseEmployeService<T extends Employe> implements CRUDService {
 	@Override public void delete(Long id) {deleteEmploye(id);}
 	@Override public void delete(CRUDModel m) {deleteEmploye((T) m);}
 	@Override public void update(CRUDModel m) {updateEmploye((T) m);}
-	@Override public T create(CRUDModel m) {
-		return createEmploye((T) m);
-	}
+	@Override public T create(CRUDModel m) {return createEmploye((T) m);}
 
     @Override
 	public T findById(Long id){
