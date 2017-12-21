@@ -1,4 +1,4 @@
-package com.ipiecoles.java.javaeval.model;
+package com.ipiecoles.java.java230.model;
 
 import java.util.Arrays;
 import java.util.HashSet;

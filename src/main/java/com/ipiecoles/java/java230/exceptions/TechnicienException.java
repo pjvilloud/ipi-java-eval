@@ -1,6 +1,6 @@
-package com.ipiecoles.java.javaeval.exceptions;
+package com.ipiecoles.java.java230.exceptions;
 
-import com.ipiecoles.java.javaeval.model.Technicien;
+import com.ipiecoles.java.java230.model.Technicien;
 
 public class TechnicienException extends Exception {
 

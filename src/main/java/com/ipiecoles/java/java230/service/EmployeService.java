@@ -1,7 +1,7 @@
-package com.ipiecoles.java.javaeval.service;
+package com.ipiecoles.java.java230.service;
 
-import com.ipiecoles.java.javaeval.model.Employe;
-import com.ipiecoles.java.javaeval.repository.EmployeRepository;
+import com.ipiecoles.java.java230.model.Employe;
+import com.ipiecoles.java.java230.repository.EmployeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

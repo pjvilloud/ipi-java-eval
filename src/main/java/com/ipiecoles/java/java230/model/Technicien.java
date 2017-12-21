@@ -1,9 +1,10 @@
-package com.ipiecoles.java.javaeval.model;
+package com.ipiecoles.java.java230.model;
 
-import com.ipiecoles.java.javaeval.exceptions.TechnicienException;
+import com.ipiecoles.java.java230.exceptions.TechnicienException;
 import org.joda.time.LocalDate;
 
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import java.util.Objects;
 
