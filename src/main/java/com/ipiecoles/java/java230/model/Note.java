@@ -1,4 +1,4 @@
-package com.ipiecoles.java.javaeval.model;
+package com.ipiecoles.java.java230.model;
 
 /**
  * Created by pjvilloud on 27/09/17.
