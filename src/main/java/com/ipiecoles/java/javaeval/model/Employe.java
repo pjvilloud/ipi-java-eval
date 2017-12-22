@@ -13,17 +13,24 @@ public abstract class Employe {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
+	
+	@Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
+	private LocalDate dateEmbauche;
+	
+	// Rajout de l'attribut tempsPartiel
+	//private byte tempsPartiel;
+
+	private String matricule;
 
 	private String nom;
 	
 	private String prenom;
 
-	private String matricule;
-
-	@Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
-	private LocalDate dateEmbauche;
-	
 	private Double salaire = Entreprise.SALAIRE_BASE;
+	
+	// Plusieurs employes pour une entreprise
+	@ManyToOne
+	private Entreprise entreprise;
 	
 	public Employe() {
 		
@@ -58,6 +65,14 @@ public abstract class Employe {
 	public void setId(Long id) {
 		this.id = id;
 	}
+	
+	//public byte getTempsPartiel() {
+	//	return tempsPartiel;
+	//}
+
+	//public void setTempsPartiel(byte tempsPartiel) {
+	//	this.tempsPartiel = tempsPartiel;
+	//}
 
 	/**
 	 * @return the nom
@@ -113,9 +128,9 @@ public abstract class Employe {
 	 * @throws Exception 
 	 */
 	public void setDateEmbauche(LocalDate dateEmbauche) throws Exception {
-		/*if(dateEmbauche != null && dateEmbauche.isAfter(LocalDate.now())) {
+		if(dateEmbauche != null && dateEmbauche.isAfter(LocalDate.now())) {
 			throw new Exception("La date d'embauche ne peut être postérieure à la date courante");
-		}*/
+		}
 		this.dateEmbauche = dateEmbauche;
 	}
 
@@ -164,4 +179,20 @@ public abstract class Employe {
 	public int hashCode() {
 		return Objects.hash(nom, prenom, matricule, dateEmbauche, salaire);
 	}
+
+	// getter de Entreprise
+	public Entreprise getEntreprise() {
+		return entreprise;
+	}
+
+	//setter de Entreprise
+	public void setEntreprise(Entreprise entreprise) {
+		this.entreprise = entreprise;
+	}
+	
+	//unsetter de Entreprise
+	public void unsetEntreprise() {
+		this.entreprise = null;
+	}
+
 }
