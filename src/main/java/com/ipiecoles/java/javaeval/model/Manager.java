@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 public class Manager extends Employe {
 
 	@OneToMany(mappedBy = "manager")
-	private Set<Technicien> equipe = new HashSet();
+	private Set<Technicien> equipe = new HashSet<Technicien>();
 
 	public Manager(){
 
@@ -23,6 +23,10 @@ public class Manager extends Employe {
 	public Manager(String nom, String prenom, String matricule, LocalDate dateEmbauche, Double salaire, HashSet<Technicien> equipe) {
 		super(nom, prenom, matricule, dateEmbauche, salaire);
 		this.equipe = equipe;
+	}
+	
+	public Manager(String nom, String prenom, String matricule, LocalDate dateEmbauche, Double salaire) {
+		super(nom, prenom, matricule, dateEmbauche, salaire);
 	}
 
 	public void ajoutTechnicienEquipe(Technicien technicien) {
