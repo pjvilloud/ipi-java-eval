@@ -8,11 +8,14 @@ import java.util.Objects;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-public abstract class Employe {
+public abstract class Employe implements CRUDModel {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
+	
+	@ManyToOne
+	private Entreprise entreprise;
 
 	private String nom;
 	
@@ -25,9 +28,7 @@ public abstract class Employe {
 	
 	private Double salaire = Entreprise.SALAIRE_BASE;
 	
-	public Employe() {
-		
-	}
+	public Employe() {}
 	
 	public Employe(String nom, String prenom, String matricule, LocalDate dateEmbauche, Double salaire) {
 		this.nom = nom;
@@ -113,9 +114,9 @@ public abstract class Employe {
 	 * @throws Exception 
 	 */
 	public void setDateEmbauche(LocalDate dateEmbauche) throws Exception {
-		/*if(dateEmbauche != null && dateEmbauche.isAfter(LocalDate.now())) {
+		if(dateEmbauche != null && dateEmbauche.isAfter(LocalDate.now())) {
 			throw new Exception("La date d'embauche ne peut être postérieure à la date courante");
-		}*/
+		}
 		this.dateEmbauche = dateEmbauche;
 	}
 
@@ -132,17 +133,23 @@ public abstract class Employe {
 	public void setSalaire(Double salaire) {
 		this.salaire = salaire;
 	}
+	
+	/**
+	 * @return the entreprise
+	 */
+	public Entreprise getEntreprise() {
+		return entreprise;
+	}
+	/**
+	 * @param salaire the entreprise to set
+	 */
+	public void setEntreprise(Entreprise e) {
+		entreprise = e;
+	}
 
 	@Override
 	public String toString() {
-		final StringBuilder sb = new StringBuilder("Employe{");
-		sb.append("nom='").append(nom).append('\'');
-		sb.append(", prenom='").append(prenom).append('\'');
-		sb.append(", matricule='").append(matricule).append('\'');
-		sb.append(", dateEmbauche=").append(dateEmbauche);
-		sb.append(", salaire=").append(salaire);
-		sb.append('}');
-		return sb.toString();
+		return getNom() + ", " + getPrenom();
 	}
 
 	@Override

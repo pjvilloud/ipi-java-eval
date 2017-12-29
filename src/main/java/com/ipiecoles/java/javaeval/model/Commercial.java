@@ -27,6 +27,7 @@ public class Commercial extends Employe {
 		this.performance = performance;
 	}
 
+	@Override
 	public Double getPrimeAnnuelle() {
 		return Math.max(Math.ceil(this.getCaAnnuel() * 0.05), 500);
 	}
@@ -67,6 +68,7 @@ public class Commercial extends Employe {
 		return performance;
 	}
 
+	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
 		if (!(o instanceof Commercial)) return false;
