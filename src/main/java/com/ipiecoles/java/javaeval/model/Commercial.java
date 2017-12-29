@@ -82,7 +82,7 @@ public class Commercial extends Employe {
 	public String toString() {
 		return "Commercial{" +
 				"caAnnuel=" + caAnnuel +
-				", performance=" + performance +
-				"} " + super.toString();
+				", performance=" + performance
+				+ super.toString() + "}";
 	}
 }
