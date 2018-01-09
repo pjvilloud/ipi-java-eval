@@ -1,89 +1,66 @@
 package com.ipiecoles.java.javaeval.service;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.ipiecoles.java.javaeval.model.Employe;
 import com.ipiecoles.java.javaeval.model.Entreprise;
 import com.ipiecoles.java.javaeval.repository.EntrepriseRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
-import static javafx.scene.input.KeyCode.T;
+public class EntrepriseService {
+	
+	@Autowired
+	private EmployeService employeService;
+	private EntrepriseRepository entrepriseRepository;
+	
+	public Entreprise CreerEntreprise(Entreprise entreprise) {
+		
+		return entrepriseRepository.save(entreprise);
+		
+	}
 
-@Service
-public class EntrepriseService implements EntrepriseRepository {
+	public Entreprise findByNom(String nom) {
+		
+		return entrepriseRepository.findByNom(nom);
+		
+	
+	}
+	
+	public void AjoutEmploye (Employe employe,Entreprise entreprise) {
+		
+		entreprise.getListEmploye().add(employe);
+		
 
-    private EmployeService employeService;
-
-    public EntrepriseService(EmployeService employeService) {
-
-        this.employeService = employeService
-
-    }
-
-    @Autowired
-    private EntrepriseRepository entrepriseRepository; //création d'une instance qui contient les méthodes abstraites EntrepriseRepository
-
-
-    @Override
-    public Employe findByNom(String nom) {
-        return null;
-    }
-
-    @Override
-    public <S extends T> S save(S s) {
-        return null;
-    }
-
-    @Override
-    public <S extends T> Iterable<S> save(Iterable<S> iterable) {
-        return null;
-    }
-
-    @Override
-    public Entreprise findOne(Integer integer) {
-        return null;
-    }
-
-    @Override
-    public boolean exists(Integer integer) {
-        return false;
-    }
-
-    @Override
-    public Iterable<Entreprise> findAll() {
-        return null;
-    }
-
-    @Override
-    public Iterable<Entreprise> findAll(Iterable<Integer> iterable) {
-        return null;
-    }
-
-    @Override
-    public long count() {
-        return 0;
-    }
-
-    @Override
-    public void delete(Integer integer) {
-
-    }
-
-    @Override
-    public void delete(Entreprise entreprise) {
-
-    }
-
-    @Override
-    public void delete(Iterable<? extends Entreprise> iterable) {
-
-    }
-
-    @Override
-    public void deleteAll() {
-
-    }
-}
-
-
-
+	}
+	
+	public void SupprimeEmploye (Employe employe,Entreprise entreprise) {
+		
+		entreprise.getListEmploye().remove(employe);
+		
+	}
+	
+	public List <Employe> findAllEmploye( Entreprise entreprise) {
+		
+		List <Employe> listeEmploye = entreprise.getListEmploye();
+		
+		return listeEmploye;
+	}
+	
+	
+	public Integer CountAllEmploye(Entreprise entreprise) {
+		//compromis:renvoie un type Integer au lieu de Long pour s'ajuster à la méthode size() qui renvoie la taille d'une liste.
+		
+		return entreprise.getListEmploye().size();
+	}
+	
+	
+	//Augmenter un employé d'une entreprise 
+	//Au préalable: établir une relation entre les entités Entreprise et Employe.
+	
+	
+	//Récupérer la masse salariale d'une entreprise
+	
+	
+	
 }
