@@ -12,6 +12,7 @@ public class EntrepriseService {
 	
 	@Autowired
 	private EmployeService employeService;
+	@Autowired
 	private EntrepriseRepository entrepriseRepository;
 	
 	public Entreprise CreerEntreprise(Entreprise entreprise) {

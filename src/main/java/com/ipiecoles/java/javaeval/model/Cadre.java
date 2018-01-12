@@ -2,13 +2,18 @@ package com.ipiecoles.java.javaeval.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="Cadre")
 public class Cadre {
 	
-	
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
 	
 	@Column(name="coefficient")
 	private Integer coefficient;

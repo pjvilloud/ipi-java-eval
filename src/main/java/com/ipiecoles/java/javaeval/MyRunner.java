@@ -3,6 +3,8 @@ package com.ipiecoles.java.javaeval;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import ch.qos.logback.core.encoder.EchoEncoder;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -12,13 +14,15 @@ public class MyRunner implements CommandLineRunner {
 
     @Override
     public void run(String... strings) throws Exception {
-        Connection connexion = initConnection();
+    	
+    	System.out.println("Bonjour!!!!!!!!!!!!!!!!!!!!!!!!!");
+       /* Connection connexion = initConnection();
         Statement statement = connexion.createStatement();
         ResultSet resultSet = statement.executeQuery("SELECT * FROM Employe LIMIT 10");
         while ( resultSet.next() ) {
             print(resultSet.getString("nom"));
             print(resultSet.getDate("dateEmbauche"));
-        }
+        }*/
 
         /*Technicien t = technicienRepository.findOne(4L);
         print(t);
@@ -66,7 +70,7 @@ public class MyRunner implements CommandLineRunner {
     public java.sql.Connection initConnection(){
         String url = "jdbc:mysql://localhost:3306/entreprise";
         String user = "root";
-        String pwd = "root";
+        String pwd = "";
 
         java.sql.Connection connexion = null;
 

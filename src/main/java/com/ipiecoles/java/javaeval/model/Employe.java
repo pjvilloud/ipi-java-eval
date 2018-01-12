@@ -25,7 +25,7 @@ public abstract class Employe {
 	
 	private Double salaire = Entreprise.SALAIRE_BASE;
 	
-	 @ManyToOne
+	@ManyToOne
 	private Entreprise entreprise;
 	
 	public Employe() {

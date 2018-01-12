@@ -3,6 +3,10 @@ package com.ipiecoles.java.javaeval.model;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.swing.JSpinner.ListEditor;
@@ -20,9 +24,15 @@ public final class Entreprise {
 	public static final Double PRIME_MANAGER_PAR_TECHNICIEN = 250d;
 	public static final Double PRIME_ANCIENNETE = 100d;
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
+	
 	//Une relation one to many est caractérisée par un champ de type Collection (ici List <Employe> listEmploye dans la classe esclave (ici Entreprise).
-	@OneToMany(mappedBy="entreprise")
+	
 	private String nom;
+	
+	@OneToMany(mappedBy="entreprise")
 	private List <Employe> listEmploye;
 	
 	public static Double primeAnnuelleBase() {
