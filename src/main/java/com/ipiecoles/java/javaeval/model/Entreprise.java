@@ -1,5 +1,6 @@
 package com.ipiecoles.java.javaeval.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -15,7 +16,7 @@ import org.joda.time.LocalDate;
 
 //1.1
 @Entity
-@Table(name="Entreprise")
+@Table(name="entreprise")
 public final class Entreprise {
 	public static final Double SALAIRE_BASE = 1480.27;
 	public static final Integer NB_CONGES_BASE = 25;
@@ -33,7 +34,7 @@ public final class Entreprise {
 	private String nom;
 	
 	@OneToMany(mappedBy="entreprise")
-	private List <Employe> listEmploye;
+	private List <Employe> listEmploye=new ArrayList<>();
 	
 	public static Double primeAnnuelleBase() {
 		return LocalDate.now().getYear() * 0.5;

@@ -3,17 +3,38 @@ package com.ipiecoles.java.javaeval.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.ipiecoles.java.javaeval.model.Employe;
 import com.ipiecoles.java.javaeval.model.Entreprise;
 import com.ipiecoles.java.javaeval.repository.EntrepriseRepository;
 
+@Service
 public class EntrepriseService {
 	
-	@Autowired
-	private EmployeService employeService;
+	private String nom;
+
+	public String getNom() {
+		return nom;
+	}
+
+	public void setNom(String nom) {
+		this.nom = nom;
+	}
+
+	
+    
+	public EntrepriseService(String nom) {
+		this.nom = nom;
+	}
+
+
+
 	@Autowired
 	private EntrepriseRepository entrepriseRepository;
+	
+	@Autowired
+	private EmployeService employeService=new EmployeService();
 	
 	public Entreprise CreerEntreprise(Entreprise entreprise) {
 		

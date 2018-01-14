@@ -2,15 +2,20 @@ package com.ipiecoles.java.javaeval.model;
 
 import com.ipiecoles.java.javaeval.exceptions.TechnicienException;
 import org.joda.time.LocalDate;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
 import java.util.Objects;
 
 @Entity
+@Table(name="technicien")
 public class Technicien extends Employe implements Comparable<Technicien> {
 
 
+	
 	@ManyToOne
 	private Manager manager;
 
