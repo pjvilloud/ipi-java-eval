@@ -149,7 +149,7 @@ public class MyRunner implements CommandLineRunner {
     
     
     public java.sql.Connection initConnection(){
-        String url = "jdbc:mysql://localhost:3306/entreprise";
+        String url = "jdbc:mysql://localhost:3306/entreprise2";
         String user = "root";
         String pwd = "";
 
