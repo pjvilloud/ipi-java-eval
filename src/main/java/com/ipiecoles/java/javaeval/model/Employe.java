@@ -2,12 +2,15 @@ package com.ipiecoles.java.javaeval.model;
 
 import org.hibernate.annotations.Type;
 import org.joda.time.LocalDate;
+import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import java.util.Objects;
 
-@Entity
+@Component
 @Inheritance(strategy = InheritanceType.JOINED)
+@Entity
+@Table(name="employe")
 public abstract class Employe {
 
 	@Id
@@ -25,9 +28,14 @@ public abstract class Employe {
 	
 	private Double salaire = Entreprise.SALAIRE_BASE;
 	
+	@ManyToOne
+	private Entreprise entreprise;
+	
 	public Employe() {
 		
 	}
+	
+	
 	
 	public Employe(String nom, String prenom, String matricule, LocalDate dateEmbauche, Double salaire) {
 		this.nom = nom;
@@ -45,7 +53,7 @@ public abstract class Employe {
 		return Entreprise.NB_CONGES_BASE;
 	}
 	
-	public abstract Double getPrimeAnnuelle();
+	//public abstract Double getPrimeAnnuelle();
 
 	public void augmenterSalaire(Double pourcentage) {
 		this.salaire = this.getSalaire() * (1 + pourcentage);
